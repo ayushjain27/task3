@@ -19,14 +19,14 @@ const NoteState = (props) => {
   }
 
   // Add a Note
-  const addNote = async (title, completed) => {
+  const addNote = async (title, completed, userId) => {
     // TODO : API Call
     const response = await fetch(` https://jsonplaceholder.typicode.com/todos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({title, completed})
+      body: JSON.stringify({title, completed, userId})
     });
 
     const note = await response.json();
@@ -52,22 +52,23 @@ const NoteState = (props) => {
   }
 
   // Edit a Note
-  const editNote = async (id, title, completed) => {
+  const editNote = async (id, title, completed, userId) => {
     // API Call
     const response = await fetch(`https://jsonplaceholder.typicode.com/todos/:id`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({title, completed})
+      body: JSON.stringify({title, completed, userId})
     });
     let newNotes = JSON.parse(JSON.stringify(notes))
     //Logic to edit in Client
     for (let index = 0; index < newNotes.length; index++) {
       const element = newNotes[index];
-      if (element._id === id) {
+      if (element.id === id) {
         newNotes[index].title = title;
         newNotes[index].completed = completed;
+        newNotes[index].userId = userId;
         break;
       }
     }
@@ -76,7 +77,7 @@ const NoteState = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes }}>
+    <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getNotes}}>
       {props.children}
     </NoteContext.Provider>
   )
