@@ -21,7 +21,7 @@ const NoteState = (props) => {
   // Add a Note
   const addNote = async (title, completed, userId) => {
     // TODO : API Call
-    const response = await fetch(` https://jsonplaceholder.typicode.com/todos`, {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/todos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
